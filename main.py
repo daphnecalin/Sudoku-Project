@@ -18,31 +18,6 @@ smallFont = pygame.font.Font('freesansbold.ttf', 20)
 
 boardDimension = 495 # width and height of board
 
-print(pygame.font.get_fonts())
-
-
-def change_to_menu(): # cause menu to be displayed and initialize parts
-    is_menu = True
-    pass
-
-def change_to_game(difficulty): # cause game to be displayed and initialize
-    return False, difficulty
-
-def game(): # main game loop
-    
-    # implement when Board, Cell, SudokuGenerator are finished
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return False
-            
-
-    screen.fill((255, 255, 255))
-
-    
-    pygame.display.flip() # update screen
-
-
-    return True
 
 if __name__ == "__main__":
     running = True
@@ -67,8 +42,13 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight:
                         difficulty = "easy"
-                    elif btnPosX + btnWidth <= mouse[0] <= btnPosX + btnWidth and btnPosY <= mouse[1] <= btnPosY + btnHeight:
+                        print("ez")
+                    elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                         difficulty = "medium"
+                        print("medium")
+                    elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
+                        difficulty = "hard"
+                        print("hard")
 
             # Set up screen, window text
             screen.fill((255, 255, 255))
@@ -84,9 +64,8 @@ if __name__ == "__main__":
             mouse = pygame.mouse.get_pos() 
             
             
-            
-            pygame.draw.rect(screen, (150, 150, 150), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight)) # middle button
             pygame.draw.rect(screen, (125, 125, 125), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight)) # left
+            pygame.draw.rect(screen, (150, 150, 150), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight)) # middle button
             pygame.draw.rect(screen, (125, 125, 125), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight)) # right
             
             easyButton = smallFont.render('Easy', False, (0, 0, 0))
@@ -98,8 +77,13 @@ if __name__ == "__main__":
             screen.blit(mediumButton, (216, 340)) # offset of (15, 15), simpler to hardcode...
             screen.blit(hardButton, (320, 340)) # offset of (20, 15)
             
-            # finish implementing clicks
-            
+            # hover effect
+            if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight:
+                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight), width = 2) # left
+            elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
+                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight), width = 2)
+            elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
+                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight), width = 2) # right
             # when pressed: change_to_game()
 
             pygame.display.flip()
