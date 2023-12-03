@@ -52,6 +52,8 @@ def menu(): # main menu loop
     screen.blit(easyButton, (130, 340)) # offset of (20, 15)
     screen.blit(mediumButton, (216, 340)) # offset of (15, 15)
     screen.blit(hardButton, (320, 340)) # offset of (20, 15)
+    
+    # finish implementing clicks
 
     pygame.display.flip()
     return True # .............
