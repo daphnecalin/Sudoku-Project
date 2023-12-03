@@ -14,8 +14,9 @@ class Cell:
 
     def draw(self):
         # implement along with gui
-        """
+    
+        self.screen.fill((255,255,255))
         if self.value == 0:
             pass
         else:
-            pass"""
+            pass
