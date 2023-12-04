@@ -18,13 +18,17 @@ titleFont = pygame.font.Font('freesansbold.ttf', 50)
 smallFont = pygame.font.Font('freesansbold.ttf', 20)
 
 
-
+def change_to_game(difficulty):
+    board = Board(boardDimension, boardDimension, screen, difficulty)
+    return True, board
+    
 
 if __name__ == "__main__":
     running = True
     menu = True
     game = False
     difficulty = ""
+    board = None
     
     while running:
         while menu:
@@ -44,17 +48,17 @@ if __name__ == "__main__":
                     if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight:
                         difficulty = "easy"
                         print("ez")
-                        game = True
+                        game, board = change_to_game("easy")
                         menu = False
                         
                     elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                         difficulty = "medium"
-                        game = True
+                        game, board = change_to_game("medium")
                         menu = False
                         
                     elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                         difficulty = "hard"
-                        game = True
+                        game, board = change_to_game("hard")
                         menu = False
                         
 
@@ -115,10 +119,10 @@ if __name__ == "__main__":
                     board.select(row, col)
                     pass
             
-            board = Board(boardDimension, boardDimension, screen, difficulty)
             
-            if difficulty == "easy":
-                pass
+            
+            board.draw()
+            
             
             pygame.display.flip()
     

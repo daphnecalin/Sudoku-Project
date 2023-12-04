@@ -37,12 +37,10 @@ class Cell:
             sketchText = smallerFont.render(str(self.sketched_value), False, (100, 100, 100))
             self.screen.blit(sketchText, (4 + posX + 2*(height/81 * (self.sketched_value % 4 )), 4 + posY + 3*(height/81 * (self.sketched_value // 4))))
             
-        print(self.selected, "self selected TRUE!!!")
+
         if self.selected == True:
-            print("why wont work???")
-            #selection_box = pygame.Rect((Cell.dimension / 9 * (self.col)), (Cell.dimension / 9 * self.row), 55, 55)
-            selection_box = pygame.Rect(0,0, 55, 55)
-            print("pipi")
+    
+            selection_box = pygame.Rect((Cell.dimension / 9 * (self.row)), (Cell.dimension / 9 * self.col), 55, 55)
             pygame.draw.rect(self.screen, (255, 0, 0), selection_box, width = 2)
         
     def select(self):

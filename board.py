@@ -1,5 +1,7 @@
 import pygame
 from cell import Cell
+from sudoku_generator import SudokuGenerator
+from sudoku_generator import generate_sudoku
 
 class Board:
     #initializes board attributes
@@ -8,10 +10,19 @@ class Board:
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
-        #the modification is to provide a starting point for the self.cells so that its in the board class
-        self.cells =  self.initialize_cells()  #initializes cell attribute w/ empty 9x9 grid of cells , this was created as a plac
+        
+        
+        
+        if difficulty ==  "easy":
+            self.board = generate_sudoku(9, 30)
+        elif difficulty ==  "medium":
+            self.board = generate_sudoku(9, 40)
+        elif difficulty ==  "medium":
+            self.board = generate_sudoku(9, 50)
+            
+        # initialize cells based on generated board
+        self.cells =  self.initialize_cells()  # holds the actual cells of the board
         self.selected_cell = None
-        self.board = self.initialize_board()
 
     def draw(self):
         #fills screen with white
@@ -128,7 +139,7 @@ class Board:
         
      #Introduced to create empty 9x9 grid of cells
     def initialize_cells(self):  
-        return [[Cell(0, i, j, self.screen) for i in range(9)] for j in range(9)]
+        return [[Cell(self.board[i][j], i, j, self.screen) for i in range(9)] for j in range(9)]
     
     def initialize_board(self):
         return [[0]*9 for i in range(9)]
