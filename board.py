@@ -15,7 +15,6 @@ class Board:
         
         if difficulty ==  "easy":
             self.board = generate_sudoku(9, 30)
-            
         elif difficulty ==  "medium":
             self.board = generate_sudoku(9, 40)
         elif difficulty ==  "hard":
@@ -51,7 +50,6 @@ class Board:
             self.selected_cell.deselect()
         #sets new selected cell
         self.selected_cell = self.cells[row][col]
-        
         self.selected_cell.select()
 
 
@@ -93,7 +91,8 @@ class Board:
             for cell in row:
                 #cheks if the cell is not already filled
                 if not cell.is_initial():
-                    cell.clear_value()
+                    cell.set_cell_value(0)
+                    cell.set_sketched_value(0)
 
 
     def is_full(self):
@@ -111,7 +110,7 @@ class Board:
         for row_idx, row in enumerate(self.cells):
             for col_idx, cell in enumerate(row):
                 #updates boards cells value
-                self.cells[row_idx][col_idx] = cell.value # turns the cells into integers :(
+                self.board[row_idx][col_idx] = cell.value # turns the cells into integers :(
 
 
     def find_empty(self):
@@ -125,7 +124,11 @@ class Board:
         
      #Introduced to create empty 9x9 grid of cells
     def initialize_cells(self):  
-        return [[Cell(self.board[i][j], i, j, self.screen) for i in range(9)] for j in range(9)]
+        for i in range(9):
+            for j in range(9):
+                print(self.board[j][i], end="")
+            print()
+        return [[Cell(self.board[j][i], j, i, self.screen) for i in range(9)] for j in range(9)]
     
     def initialize_board(self):
         return [[0]*9 for i in range(9)]

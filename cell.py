@@ -11,9 +11,15 @@ class Cell:
         self.sketched_value = 0
         self.selected = None
         
+        if value != 0:
+            self.initial = True
+        else:
+            self.initial = False
+        
 
     def set_cell_value(self, value):
-        self.value = value
+        if not self.initial:
+            self.value = value
 
     def set_sketched_value(self, value):
         self.sketched_value = value
@@ -35,12 +41,15 @@ class Cell:
         
         if self.sketched_value != 0 and self.value == 0:
             sketchText = smallerFont.render(str(self.sketched_value), False, (100, 100, 100))
-            self.screen.blit(sketchText, (4 + posX + 2*(height/81 * (self.sketched_value % 4 )), 4 + posY + 3*(height/81 * (self.sketched_value // 4))))
+            # FIX THIS!
+            x = posX + (height/81)*((self.value - 1) % 3)
+            y = posY + (height/81)*((self.value - 1) % 3)
+            self.screen.blit(sketchText, (x,y))
             
 
         if self.selected == True:
     
-            selection_box = pygame.Rect((Cell.dimension / 9 * (self.row)), (Cell.dimension / 9 * self.col), 55, 55)
+            selection_box = pygame.Rect((Cell.dimension / 9 * (self.col)), (Cell.dimension / 9 * self.row), 55, 55)
             pygame.draw.rect(self.screen, (255, 0, 0), selection_box, width = 2)
         
     def select(self):
@@ -49,6 +58,8 @@ class Cell:
     def deselect(self):
         self.selected = False
     
+    def is_initial(self):
+        return self.initial
     
             
             

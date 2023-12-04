@@ -124,18 +124,25 @@ if __name__ == "__main__":
                     location = board.click(mouse[0], mouse[1])
                     if location:
                         row, col = location
+                        
                         board.select(row, col)
                     
                     if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight: # reset button functionality
-                        board = original_board # resets board to original position
+                        board.reset_to_original()
                         
                     elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight): # restart button
                         board = Board(boardDimension, boardDimension, screen, difficulty)
-                        original_board = board # stores initial positions of board
                         
                     elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight): # exit game
                         game = False
                         running = False
+                        
+                if event.type == pygame.KEYDOWN and event.unicode.isdigit():
+                    print(int(event.unicode))
+                    board.sketch(int(event.unicode))
+                    
+                if event.type == pygame.KEYDOWN:
+                    pass
             
             
             
@@ -159,7 +166,11 @@ if __name__ == "__main__":
             
          # Create hover effect
             button_hover(btnPosX, btnPosY, btnWidth, btnHeight, mouse[0], mouse[1])
-                
+            
+            
+            
+            
+            # Redraw display
             pygame.display.flip()
     
     pygame.quit()
