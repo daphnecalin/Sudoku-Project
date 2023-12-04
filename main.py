@@ -22,6 +22,16 @@ def change_to_game(difficulty):
     board = Board(boardDimension, boardDimension, screen, difficulty)
     return True, board
     
+def button_hover(btnPosX, btnPosY, btnWidth, btnHeight, x, y):
+    # Create hover effect
+    if btnPosX < x < btnPosX + btnWidth and btnPosY < y < btnPosY + btnHeight: # Check whether mouse is within dimensions of button
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight), width = 2) # Draw red border around button
+        
+    elif (btnPosX + btnWidth < x < btnPosX + 2*btnWidth) and (btnPosY <= y <= btnPosY + btnHeight):
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight), width = 2)
+        
+    elif (btnPosX + 2*btnWidth < x < btnPosX + 3*btnWidth) and (btnPosY <= y <= btnPosY + btnHeight):
+        pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight), width = 2) # right
 
 if __name__ == "__main__":
     running = True
@@ -92,14 +102,7 @@ if __name__ == "__main__":
             screen.blit(hardButton, (320, 340)) # offset of (20, 15)
             
             # Create hover effect
-            if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight: # Check whether mouse is within dimensions of button
-                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight), width = 2) # Draw red border around button
-                
-            elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
-                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight), width = 2)
-                
-            elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
-                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight), width = 2) # right
+            button_hover(btnPosX, btnPosY, btnWidth, btnHeight, mouse[0], mouse[1])
             # when pressed: change_to_game()
 
             pygame.display.flip() # Update display
@@ -153,6 +156,10 @@ if __name__ == "__main__":
             screen.blit(restartButton, (btnPosX + btnWidth + 15, btnPosY + 15)) # offset of (15, 15), simpler to hardcode...
             screen.blit(exitButton, (btnPosX + btnWidth*2 + 20, btnPosY + 15)) # offset of (20, 15)
             
+            
+         # Create hover effect
+            button_hover(btnPosX, btnPosY, btnWidth, btnHeight, mouse[0], mouse[1])
+                
             pygame.display.flip()
     
     pygame.quit()
