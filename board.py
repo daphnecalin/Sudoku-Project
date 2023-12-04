@@ -15,9 +15,10 @@ class Board:
         
         if difficulty ==  "easy":
             self.board = generate_sudoku(9, 30)
+            
         elif difficulty ==  "medium":
             self.board = generate_sudoku(9, 40)
-        elif difficulty ==  "medium":
+        elif difficulty ==  "hard":
             self.board = generate_sudoku(9, 50)
             
         # initialize cells based on generated board
@@ -29,7 +30,6 @@ class Board:
         self.screen.fill((255, 255, 255))
         #draws grid
         cell_width = self.width // 9
-        cell_height = self.height // 9
 
         for i in range(0, self.width + 1, cell_width):
             line_thickness = 3 if i % (3 * cell_width) == 0 else 1  # Bold lines for 3x3 boxes
@@ -41,19 +41,7 @@ class Board:
             for cell in row:
                 cell.draw()
                 
-
-        #updates display after drawing
-        pygame.display.flip()
-
-        #redrawing just in case for more clarity
-        for i in range(0, self.width + 1, self.width // 9):
-            pygame.draw.line(self.screen, (0, 0, 0), (i, 0), (i, self.height))
-            pygame.draw.line(self.screen, (0, 0, 0), (0, i), (self.width, i))
-
-        # Draw each cell again just in case
-        for row in self.cells:
-            for cell in row:
-                cell.draw()
+       
               
 
 

@@ -6,7 +6,7 @@ from sudoku_generator import SudokuGenerator
 pygame.init()
 boardDimension = 495 # width and height of board
 
-screen = pygame.display.set_mode([boardDimension+2, boardDimension+2]) # draw things relative to this
+screen = pygame.display.set_mode([boardDimension+2, boardDimension+52]) # draw things relative to this
 running = True
 is_menu = True
 
@@ -30,13 +30,14 @@ if __name__ == "__main__":
     difficulty = ""
     board = None
     
+    btnWidth = 95
+    btnHeight = 50
+    btnPosX = 110
+    
+    
     while running:
         while menu:
-            btnWidth = 95
-            btnHeight = 50
-            btnPosX = 110
             btnPosY = 325
-            
             mouse = pygame.mouse.get_pos()
             
             for event in pygame.event.get(): 
@@ -72,26 +73,27 @@ if __name__ == "__main__":
             screen.blit(titleText, (160,100))
             screen.blit(cat, (195, 150))
 
-            # Draw buttons and get click
+            # Get mouse position each run
             mouse = pygame.mouse.get_pos() 
             
-            
+            # Draw buttons to choose difficulty
             pygame.draw.rect(screen, (125, 125, 125), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight)) # left
             pygame.draw.rect(screen, (150, 150, 150), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight)) # middle button
             pygame.draw.rect(screen, (125, 125, 125), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight)) # right
             
+            # Store text to be displayed on buttons
             easyButton = smallFont.render('Easy', False, (0, 0, 0))
             mediumButton = smallFont.render('Medium', False, (0, 0, 0))
             hardButton = smallFont.render('Hard', False, (0, 0, 0))
             
-            
+            # Render text onto buttons
             screen.blit(easyButton, (btnPosX + 20, btnPosY + 15)) # offset of (20, 15)
             screen.blit(mediumButton, (216, 340)) # offset of (15, 15), simpler to hardcode...
             screen.blit(hardButton, (320, 340)) # offset of (20, 15)
             
-            # hover effect
-            if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight:
-                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight), width = 2) # left
+            # Create hover effect
+            if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight: # Check whether mouse is within dimensions of button
+                pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight), width = 2) # Draw red border around button
                 
             elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                 pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight), width = 2)
@@ -100,11 +102,13 @@ if __name__ == "__main__":
                 pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight), width = 2) # right
             # when pressed: change_to_game()
 
-            pygame.display.flip()
+            pygame.display.flip() # Update display
             
         
         while game:
-            
+            btnPosY = 497
+            original_board = board
+            # Get mouse each frame
             mouse = pygame.mouse.get_pos()
             
             for event in pygame.event.get(): 
@@ -113,16 +117,41 @@ if __name__ == "__main__":
                     game = False
                     break
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    # check for selecting cells
-                    row = mouse[1] // (boardDimension // 9)
-                    col = mouse[0] // (boardDimension // 9)
-                    board.select(row, col)
-                    pass
+                    # Check for selecting cells
+                    location = board.click(mouse[0], mouse[1])
+                    if location:
+                        row, col = location
+                        board.select(row, col)
+                    
+                    if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight: # reset button functionality
+                        board = original_board # resets board to original position
+                        
+                    elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight): # restart button
+                        board = Board(boardDimension, boardDimension, screen, difficulty)
+                        original_board = board # stores initial positions of board
+                        
+                    elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight): # exit game
+                        game = False
+                        running = False
             
             
             
             board.draw()
             
+            # Draw buttons to control game
+            pygame.draw.rect(screen, (113, 216, 84), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight)) # reset
+            pygame.draw.rect(screen, (34, 191, 81), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight)) # restart
+            pygame.draw.rect(screen, (113, 216, 84), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight)) # right
+            
+            # Store text to be displayed on buttons
+            resetButton = smallFont.render('Reset', False, (0, 0, 0))
+            restartButton = smallFont.render('Restart', False, (0, 0, 0))
+            exitButton = smallFont.render('Exit', False, (0, 0, 0))
+            
+            # Render text onto buttons
+            screen.blit(resetButton, (btnPosX + 20, btnPosY + 15)) # offset of (20, 15)
+            screen.blit(restartButton, (btnPosX + btnWidth + 15, btnPosY + 15)) # offset of (15, 15), simpler to hardcode...
+            screen.blit(exitButton, (btnPosX + btnWidth*2 + 20, btnPosY + 15)) # offset of (20, 15)
             
             pygame.display.flip()
     
