@@ -9,6 +9,10 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
         self.cells = self.create_board()
+        
+    # initiialize board
+    def create_board(self):
+        return [[Cell(0, j, i, self.screen) for i in range(9)] for j in range(9)]
 
 
     def draw(self):

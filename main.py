@@ -4,8 +4,9 @@ from cell import Cell
 from sudoku_generator import SudokuGenerator
 
 pygame.init()
+boardDimension = 495 # width and height of board
 
-screen = pygame.display.set_mode([512, 512]) # draw things relative to this
+screen = pygame.display.set_mode([boardDimension+2, boardDimension+2]) # draw things relative to this
 running = True
 is_menu = True
 
@@ -16,7 +17,7 @@ bg = pygame.image.load('bg.jpg')
 titleFont = pygame.font.Font('freesansbold.ttf', 50)
 smallFont = pygame.font.Font('freesansbold.ttf', 20)
 
-boardDimension = 495 # width and height of board
+
 
 
 if __name__ == "__main__":
@@ -43,12 +44,19 @@ if __name__ == "__main__":
                     if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight:
                         difficulty = "easy"
                         print("ez")
+                        game = True
+                        menu = False
+                        
                     elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                         difficulty = "medium"
-                        print("medium")
+                        game = True
+                        menu = False
+                        
                     elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                         difficulty = "hard"
-                        print("hard")
+                        game = True
+                        menu = False
+                        
 
             # Set up screen, window text
             screen.fill((255, 255, 255))
@@ -80,8 +88,10 @@ if __name__ == "__main__":
             # hover effect
             if btnPosX < mouse[0] < btnPosX + btnWidth and btnPosY < mouse[1] < btnPosY + btnHeight:
                 pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX, btnPosY, btnWidth, btnHeight), width = 2) # left
+                
             elif (btnPosX + btnWidth < mouse[0] < btnPosX + 2*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                 pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + btnWidth, btnPosY, btnWidth, btnHeight), width = 2)
+                
             elif (btnPosX + 2*btnWidth < mouse[0] < btnPosX + 3*btnWidth) and (btnPosY <= mouse[1] <= btnPosY + btnHeight):
                 pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(btnPosX + (2*btnWidth), btnPosY, btnWidth, btnHeight), width = 2) # right
             # when pressed: change_to_game()
@@ -90,7 +100,17 @@ if __name__ == "__main__":
             
         
         while game:
-            pass
+            
+            for event in pygame.event.get(): 
+                if event.type == pygame.QUIT:
+                    running = False
+                    game = False
+                    break
+            
+            board = Board(boardDimension, boardDimension, screen, difficulty)
+            board.draw()
+            
+            pygame.display.flip()
     
     pygame.quit()
     
