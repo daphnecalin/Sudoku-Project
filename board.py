@@ -9,8 +9,9 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
         #the modification is to provide a starting point for the self.cells so that its in the board class
-        self.cells =  self.initialize_empty_board()  #initializes cell attribute w/ empty 9x9 grid of cells , this was created as a plac
-
+        self.cells =  self.initialize_cells()  #initializes cell attribute w/ empty 9x9 grid of cells , this was created as a plac
+        self.selected_cell = None
+        self.board = self.initialize_board()
 
     def draw(self):
         #fills screen with white
@@ -28,8 +29,9 @@ class Board:
         for row in self.cells:
             for cell in row:
                 cell.draw()
+                
 
-        #updates displat after drawing
+        #updates display after drawing
         pygame.display.flip()
 
         #redrawing just in case for more clarity
@@ -41,15 +43,19 @@ class Board:
         for row in self.cells:
             for cell in row:
                 cell.draw()
+              
 
 
     def select(self, row, col):
-        #checks for a previous selected cell, then deselct
+        #checks for a previous selected cell, then deselect
         if self.selected_cell:
             self.selected_cell.deselect()
         #sets new selected cell
         self.selected_cell = self.cells[row][col]
+        print(self.selected_cell)
+        
         self.selected_cell.select()
+        print(self.selected_cell.selected)
 
 
     def click(self, x, y):
@@ -108,7 +114,7 @@ class Board:
         for row_idx, row in enumerate(self.cells):
             for col_idx, cell in enumerate(row):
                 #updates boards cells value
-                self.cells[row_idx][col_idx] = cell.value
+                self.cells[row_idx][col_idx] = cell.value # turns the cells into integers :(
 
 
     def find_empty(self):
@@ -121,8 +127,11 @@ class Board:
         return None #returns nothing if it is not empty
         
      #Introduced to create empty 9x9 grid of cells
-    def initialize_empty_board(self):  
+    def initialize_cells(self):  
         return [[Cell(0, i, j, self.screen) for i in range(9)] for j in range(9)]
+    
+    def initialize_board(self):
+        return [[0]*9 for i in range(9)]
 
 
     def check_board(self):

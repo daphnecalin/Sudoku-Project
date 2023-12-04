@@ -101,14 +101,24 @@ if __name__ == "__main__":
         
         while game:
             
+            mouse = pygame.mouse.get_pos()
+            
             for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
                     running = False
                     game = False
                     break
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    # check for selecting cells
+                    row = mouse[1] // (boardDimension // 9)
+                    col = mouse[0] // (boardDimension // 9)
+                    board.select(row, col)
+                    pass
             
             board = Board(boardDimension, boardDimension, screen, difficulty)
-            board.draw()
+            
+            if difficulty == "easy":
+                pass
             
             pygame.display.flip()
     
