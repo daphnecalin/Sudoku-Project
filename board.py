@@ -63,10 +63,8 @@ class Board:
             self.selected_cell.deselect()
         #sets new selected cell
         self.selected_cell = self.cells[row][col]
-        print(self.selected_cell)
         
         self.selected_cell.select()
-        print(self.selected_cell.selected)
 
 
     def click(self, x, y):

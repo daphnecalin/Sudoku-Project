@@ -7,7 +7,7 @@ class SudokuGenerator:
 		self.removed_cells = removed_cells
 		self.board = [[0] * self.row_length for _ in range(self.row_length)]
 		self.fill_values()
-		self.removed_cells = removed_cells
+		self.remove_cells()
 		
 # this functiuons gets you the board based on set paramters
 	

@@ -45,7 +45,6 @@ class Cell:
         
     def select(self):
         self.selected = True
-        print("hi!!!")
     
     def deselect(self):
         self.selected = False
