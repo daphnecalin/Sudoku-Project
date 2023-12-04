@@ -8,7 +8,8 @@ class Board:
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
-        self.cells = self.create_board()
+        #the modification is to provide a starting point for the self.cells so that its in the board class
+        self.cells =  self.initialize_empty_board()  #initializes cell attribute w/ empty 9x9 grid of cells , this was created as a plac
 
 
     def draw(self):
@@ -118,6 +119,18 @@ class Board:
                 if cell.value == 0:
                     return row_idx, col_idx
         return None #returns nothing if it is not empty
+        
+     #Introduced to create empty 9x9 grid of cells
+    def initialize_empty_board(self):  
+        cells= []   #Create empty 9x9 grid of cells
+        for _ in range(9):
+            row= []
+
+            for _ in range(9):
+                cell= Cell()  #placeholder
+                row.append(cell)
+            cells.append(row)
+        return cells
 
 
     def check_board(self):
