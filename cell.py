@@ -61,5 +61,11 @@ class Cell:
     def is_initial(self):
         return self.initial
     
+    def get_row(self):
+        return self.row
+    
+    def get_col(self):
+        return self.col
+    
             
             

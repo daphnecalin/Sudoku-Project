@@ -114,6 +114,8 @@ if __name__ == "__main__":
             # Get mouse each frame
             mouse = pygame.mouse.get_pos()
             
+            
+            
             for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
                     running = False
@@ -137,12 +139,39 @@ if __name__ == "__main__":
                         game = False
                         running = False
                         
-                if event.type == pygame.KEYDOWN and event.unicode.isdigit():
-                    print(int(event.unicode))
-                    board.sketch(int(event.unicode))
-                    
                 if event.type == pygame.KEYDOWN:
-                    pass
+                    
+                    selected = board.get_selected_cell()
+                    
+                    if selected:
+                        row = selected.get_row()
+                        col = selected.get_col()
+                    else:
+                        row = 0
+                        col = 0
+                    
+                    if event.unicode.isdigit():
+                        print(int(event.unicode))
+                        board.sketch(int(event.unicode))
+                    elif event.key == pygame.K_LEFT:
+                        if col > 0:
+                            board.select(row, col - 1)
+                        elif col == 0:
+                            board.select(row, col)
+                    elif event.key == pygame.K_RIGHT:
+                        if col < 8:
+                            board.select(row, col + 1)
+                        
+                    elif event.key == pygame.K_UP:
+                        if row > 0:
+                            board.select(row - 1, col)
+                        elif row == 0:
+                            board.select(row, col)
+                    elif event.key == pygame.K_DOWN:
+                        if row < 8:
+                            board.select(row + 1, col)
+                    
+                
             
             
             

@@ -158,5 +158,7 @@ class Board:
         #if no duplicates found in row,columns, or boxes then the board is valid
         return True
 
+    def get_selected_cell(self):
+        return self.selected_cell
 
 
