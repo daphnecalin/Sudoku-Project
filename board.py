@@ -122,15 +122,7 @@ class Board:
         
      #Introduced to create empty 9x9 grid of cells
     def initialize_empty_board(self):  
-        cells= []   #Create empty 9x9 grid of cells
-        for _ in range(9):
-            row= []
-
-            for _ in range(9):
-                cell= Cell()  #placeholder
-                row.append(cell)
-            cells.append(row)
-        return cells
+        return [[Cell(0, i, j, screen) for i in range(9)] for j in range(9)]
 
 
     def check_board(self):

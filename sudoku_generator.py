@@ -92,7 +92,7 @@ class SudokuGenerator:
 					row = random.randint(0, self.row_length - 1)
 					col = random.randint(0, self.row_length - 1)
 				self.board[row][col] = 0
-# this generates the game and board
-def generate_sudoku(size, removed):
-	sudoku_generator = SudokuGenerator(row_length=size, removed_cells=removed)
-	return sudoku_generator.get_board()
+	# this generates the game and board
+	def generate_sudoku(size, removed):
+		sudoku_generator = SudokuGenerator(row_length=size, removed_cells=removed)
+		return sudoku_generator.get_board()
