@@ -20,9 +20,15 @@ class Cell:
     def set_cell_value(self, value):
         if not self.initial:
             self.value = value
+            
+    def get_cell_value(self):
+        return self.value
 
     def set_sketched_value(self, value):
         self.sketched_value = value
+        
+    def get_sketched_value(self):
+        return self.sketched_value
 
     def draw(self):
         width =  495
@@ -35,13 +41,17 @@ class Cell:
         # implement along with gui
         
         if self.value != 0:
-            text = smallFont.render(str(self.value), False, (0, 0, 0))
+            if self.initial:
+                text = smallFont.render(str(self.value), False, (0, 0, 0))
+            else:
+                text = smallFont.render(str(self.value), False, (0, 255, 0))
             self.screen.blit(text, (posX + 20, posY + 16))
         
         
         if self.sketched_value != 0 and self.value == 0:
             sketchText = smallerFont.render(str(self.sketched_value), False, (100, 100, 100))
-            # FIX THIS!
+            
+            
             x = posX + (height/81)*((self.value - 1) % 3)
             y = posY + (height/81)*((self.value - 1) % 3)
             self.screen.blit(sketchText, (x,y))

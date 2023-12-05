@@ -170,6 +170,8 @@ if __name__ == "__main__":
                     elif event.key == pygame.K_DOWN:
                         if row < 8:
                             board.select(row + 1, col)
+                    elif event.key == pygame.K_RETURN:
+                        board.place_number(selected.get_sketched_value())
                     
                 
             

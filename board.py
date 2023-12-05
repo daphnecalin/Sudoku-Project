@@ -82,7 +82,7 @@ class Board:
     def place_number(self, value):
         # Check if there is a selected cell
         if self.selected_cell:
-            self.selected_cell.set_value(value)
+            self.selected_cell.set_cell_value(value)
 
 
     def reset_to_original(self):
