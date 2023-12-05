@@ -20,17 +20,8 @@ class SudokuGenerator:
 			print(row)
 			
 # this makes sure that a number is or is not in the baord
-	def is_valid(self, row, col, num):
-		if num in self.board[row]:  # Checking row validity
-			return False
-		for i in range(self.row_length):  # Checking column validity
-			if self.board[i][col] == num:
-				return False
-		start_row, start_col = 3 * (row // 3), 3 * (col // 3)  # Checking box validity
-		for i in range(start_row, start_row + 3):
-			for j in range(start_col, start_col + 3):
-				if self.board[i][j] == num:
-					return False
+	def valid_in_row(self, row, num):
+		return num not in self.board[row]
 
 # this does the same as the last excpet it checks columns
 	def valid_in_col(self, col, num):
@@ -46,10 +37,16 @@ class SudokuGenerator:
   # if it checks out and it valid the below function executes  
    
 	def is_valid(self, row, col, num):
-		return (
-			self.valid_in_row(row, num) and
-			self.valid_in_col(col, num) and
-			self.valid_in_box(row - row % 3, col - col % 3, num)
+		if num in self.board[row]:  # Checking row validity
+			return False
+		for i in range(self.row_length):  # Checking column validity
+			if self.board[i][col] == num:
+				return False
+		start_row, start_col = 3 * (row // 3), 3 * (col // 3)  # Checking box validity
+		for i in range(start_row, start_row + 3):
+			for j in range(start_col, start_col + 3):
+				if self.board[i][j] == num:
+					return False
 		)
 		
 
