@@ -47,7 +47,7 @@ class SudokuGenerator:
 			for j in range(start_col, start_col + 3):
 				if self.board[i][j] == num:
 					return False
-		)
+		
 		
 
    # this function fills in the box based on number and col and row
